@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Booking Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: transparent;
+      margin: 0;
+      padding: 0;
+    }
+
+    .chat-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .chat-toggle {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #D4AF37, #F4D03F);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);
+      transition: all 0.3s ease;
+      color: #1f2937;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .chat-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 40px rgba(212, 175, 55, 0.4);
+    }
+
+    .chat-container {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 350px;
+      height: 500px;
+      background: #1f2937;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      border: 1px solid #374151;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-container.active {
+      display: flex;
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, #D4AF37, #F4D03F);
+      color: #1f2937;
+      padding: 16px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      background: #1f2937;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .chat-messages::-webkit-scrollbar-track {
+      background: #374151;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: #D4AF37;
+      border-radius: 4px;
+    }
+
+    .message {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.4;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .message.bot {
+      background: #374151;
+      color: #f9fafb;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .message.user {
+      background: linear-gradient(135deg, #D4AF37, #F4D03F);
+      color: #1f2937;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+      font-weight: 500;
+    }
+
+    .quick-replies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+      padding: 0 16px 16px;
+    }
+
+    .quick-reply {
+      background: transparent;
+      border: 1px solid #D4AF37;
+      color: #D4AF37;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .quick-reply:hover {
+      background: #D4AF37;
+      color: #1f2937;
+    }
+
+    .service-option {
+      background: #374151;
+      border: 1px solid #4b5563;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 4px 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .service-option:hover {
+      border-color: #D4AF37;
+      background: #4b5563;
+    }
+
+    .service-info {
+      flex: 1;
+    }
+
+    .service-name {
+      font-weight: 600;
+      color: #f9fafb;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .service-details {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .service-price {
+      font-weight: 600;
+      color: #D4AF37;
+      font-size: 14px;
+    }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .time-slot {
+      background: #374151;
+      border: 1px solid #4b5563;
+      color: #f9fafb;
+      padding: 10px 6px;
+      border-radius: 6px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .time-slot:hover {
+      border-color: #D4AF37;
+      background: #4b5563;
+      color: #D4AF37;
+    }
+
+    .booking-summary {
+      background: #374151;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 8px 0;
+      border-left: 3px solid #D4AF37;
+    }
+
+    .booking-summary h4 {
+      color: #f9fafb;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .booking-detail {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+
+    .booking-detail strong {
+      color: #f9fafb;
+    }
+
+    .booking-detail span {
+      color: #9ca3af;
+    }
+
+    .success-message {
+      background: #064e3b;
+      color: #10b981;
+      border: 1px solid #047857;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 8px 0;
+      font-size: 12px;
+    }
+
+    .error-message {
+      background: #7f1d1d;
+      color: #f87171;
+      border: 1px solid #dc2626;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 8px 0;
+      font-size: 12px;
+    }
+
+    .loading {
+      color: #9ca3af;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .loading::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border: 2px solid #4b5563;
+      border-top: 2px solid #D4AF37;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .chat-input-container {
+      padding: 16px;
+      border-top: 1px solid #374151;
+      background: #1f2937;
+    }
+
+    .chat-input-wrapper {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 10px 12px;
+      border: 1px solid #4b5563;
+      border-radius: 20px;
+      font-size: 14px;
+      font-family: inherit;
+      resize: none;
+      max-height: 80px;
+      outline: none;
+      background: #374151;
+      color: #f9fafb;
+      transition: border-color 0.3s ease;
+    }
+
+    .chat-input:focus {
+      border-color: #D4AF37;
+    }
+
+    .chat-input::placeholder {
+      color: #9ca3af;
+    }
+
+    .send-button {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: linear-gradient(135deg, #D4AF37, #F4D03F);
+      color: #1f2937;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .send-button:hover:not(:disabled) {
+      transform: scale(1.1);
+    }
+
+    .send-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 480px) {
+      .chat-widget {
+        bottom: 10px;
+        right: 10px;
+      }
+      
+      .chat-container {
+        width: 320px;
+        height: 450px;
+        bottom: 70px;
+      }
+      
+      .chat-toggle {
+        width: 56px;
+        height: 56px;
+        font-size: 20px;
+      }
+      
+      .time-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 380px) {
+      .chat-container {
+        width: 280px;
+        right: -10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-widget">
+    <button class="chat-toggle" id="chatToggle">💬</button>
+    
+    <div class="chat-container" id="chatContainer">
+      <div class="chat-header">
+        🤖 AI Booking Assistant
+      </div>
+      
+      <div class="chat-messages" id="chatMessages">
+        <div class="message bot">
+          👋 Hi! I'm your AI booking assistant for Cortado Barbershop. I'll help you book your appointment step by step.
+          <br><br>
+          <strong>Business Hours:</strong> Mon, Tue, Thu, Fri, Sat: 10 AM - 6 PM<br>
+          <strong>Closed:</strong> Sundays & Wednesdays
+          <br><br>
+          Let's start! Which barber would you like to book with?
+        </div>
+      </div>
+      
+      <div class="chat-input-container">
+        <div class="chat-input-wrapper">
+          <textarea 
+            class="chat-input" 
+            id="chatInput" 
+            placeholder="Type your message..."
+            rows="1"
+          ></textarea>
+          <button class="send-button" id="sendButton">➤</button>
+        </div>
+        <div class="quick-replies" id="quickReplies"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle chat visibility
+    document.getElementById('chatToggle').addEventListener('click', () => {
+      const container = document.getElementById('chatContainer');
+      const toggle = document.getElementById('chatToggle');
+      
+      if (container.classList.contains('active')) {
+        container.classList.remove('active');
+        toggle.textContent = '💬';
+      } else {
+        container.classList.add('active');
+        toggle.textContent = '✕';
+      }
+    });
+
+    // Copy the entire BookingChatbot class from the original with exact same functionality
+    class BookingChatbot {
+      constructor() {
+        this.state = {
+          step: 'barber_selection',
+          barber: null,
+          service: null,
+          date: null,
+          time: null,
+          name: null,
+          phone: null,
+          email: null
+        };
+        
+        this.availableBarbers = [];
+        this.availableDates = [];
+        this.availableTimes = [];
+        
+        this.messagesContainer = document.getElementById('chatMessages');
+        this.inputField = document.getElementById('chatInput');
+        this.sendButton = document.getElementById('sendButton');
+        this.quickRepliesContainer = document.getElementById('quickReplies');
+        
+        // Exact services and prices from your booking system
+        this.services = [
+          { name: 'Haircut', duration: '45 min', price: '$45.00' },
+          { name: 'Haircut & Beard Trim', duration: '60 min', price: '$60.00' },
+          { name: 'Haircut, Beard Trim & Straight Razor Shave', duration: '60 min', price: '$80.00' },
+          { name: 'Straight Razor Shave', duration: '30 min', price: '$35.00' },
+          { name: 'Beard Trim', duration: '30 min', price: '$30.00' },
+          { name: 'Hair Enhancement (Permanent)', duration: '45 min', price: '$45.00' },
+          { name: 'Hair Enhancement (Temporary - Air-Brush)', duration: '15 min', price: '$15.00' }
+        ];
+        
+        this.init();
+      }
+      
+      init() {
+        this.sendButton.addEventListener('click', () => this.handleSend());
+        this.inputField.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            this.handleSend();
+          }
+        });
+        
+        this.inputField.addEventListener('input', this.autoResize.bind(this));
+        
+        // Start with barber selection
+        this.showBarberSelection();
+      }
+      
+      autoResize() {
+        this.inputField.style.height = 'auto';
+        this.inputField.style.height = Math.min(this.inputField.scrollHeight, 80) + 'px';
+      }
+      
+      showBarberSelection() {
+        // Always show Michael as available (your primary barber)
+        const quickReplies = [
+          { text: 'Michael', action: () => this.selectBarber('Michael') }
+        ];
+        this.showQuickReplies(quickReplies);
+      }
+      
+      async selectBarber(barber) {
+        this.state.barber = barber;
+        this.addMessage(`I'd like to book with ${barber}`, 'user');
+        this.clearQuickReplies();
+        
+        await this.delay(500);
+        this.addMessage(`Great choice! ${barber} is an excellent barber. Now, what service would you like?`, 'bot');
+        this.showServiceSelection();
+      }
+      
+      showServiceSelection() {
+        let servicesHtml = '<div style="margin: 10px 0;">';
+        this.services.forEach((service, index) => {
+          servicesHtml += `
+            <div class="service-option" onclick="chatbot.selectService('${service.name}')">
+              <div class="service-info">
+                <div class="service-name">${service.name}</div>
+                <div class="service-details">⏱ ${service.duration}</div>
+              </div>
+              <div class="service-price">${service.price}</div>
+            </div>
+          `;
+        });
+        servicesHtml += '</div>';
+        
+        this.addMessage(servicesHtml, 'bot');
+      }
+      
+      async selectService(serviceName) {
+        this.state.service = serviceName;
+        const service = this.services.find(s => s.name === serviceName);
+        this.addMessage(`I'd like ${serviceName} (${service.duration})`, 'user');
+        
+        await this.delay(500);
+        this.addMessage(`Perfect! Now let's find you an available date. Let me check ${this.state.barber}'s schedule...`, 'bot');
+        this.showTyping();
+        
+        await this.loadDates();
+      }
+      
+      async loadDates() {
+        try {
+          // Try to load from API first
+          const response = await fetch(`/api/booking/dates/${encodeURIComponent(this.state.barber)}`);
+          const data = await response.json();
+          this.availableDates = data.dates || [];
+          this.hideTyping();
+          this.showDateSelection();
+        } catch (error) {
+          console.log('API not available, generating fallback dates');
+          // Generate fallback dates for next 30 days (business days only)
+          this.availableDates = this.generateFallbackDates();
+          this.hideTyping();
+          this.addMessage("Here are our general available dates. For real-time availability, the system will check when you confirm your booking.", 'bot');
+          await this.delay(800);
+          this.showDateSelection();
+        }
+      }
+      
+      generateFallbackDates() {
+        const dates = [];
+        const today = new Date();
+        const businessDays = [1, 2, 4, 5, 6]; // Mon, Tue, Thu, Fri, Sat
+        
+        for (let i = 1; i <= 30; i++) {
+          const date = new Date(today);
+          date.setDate(today.getDate() + i);
+          
+          if (businessDays.includes(date.getDay())) {
+            const dateStr = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+            dates.push(dateStr);
+          }
+        }
+        
+        return dates.slice(0, 20); // Return first 20 business days
+      }
+      
+      showDateSelection() {
+        if (this.availableDates.length === 0) {
+          this.addMessage("I'm sorry, but there are no available dates at the moment. Please call (503) 400-8151 to book directly.", 'bot');
+          return;
+        }
+        
+        const nextWeek = this.availableDates.slice(0, 10).map(dateStr => {
+          const date = new Date(dateStr);
+          const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+          const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          return {
+            text: `${dayName} ${formattedDate}`,
+            value: dateStr,
+            action: () => this.selectDate(dateStr)
+          };
+        });
+        
+        this.addMessage("Here are the available dates:", 'bot');
+        this.showQuickReplies(nextWeek);
+      }
+      
+      async selectDate(dateStr) {
+        this.state.date = dateStr;
+        const date = new Date(dateStr);
+        const formattedDate = date.toLocaleDateString('en-US', { 
+          weekday: 'long', 
+          month: 'long', 
+          day: 'numeric' 
+        });
+        
+        this.addMessage(`I'd like to book on ${formattedDate}`, 'user');
+        this.clearQuickReplies();
+        
+        await this.delay(500);
+        this.addMessage(`Excellent! Let me check what times are available...`, 'bot');
+        this.showTyping();
+        
+        await this.loadTimes();
+      }
+      
+      async loadTimes() {
+        try {
+          // Try to load from API first
+          const response = await fetch(`/api/booking/times/${encodeURIComponent(this.state.date)}/${encodeURIComponent(this.state.barber)}`);
+          const data = await response.json();
+          this.availableTimes = data.availableTimes || [];
+          this.hideTyping();
+          this.showTimeSelection();
+        } catch (error) {
+          console.log('API not available, generating fallback times');
+          // Generate fallback times
+          this.availableTimes = this.generateFallbackTimes();
+          this.hideTyping();
+          this.showTimeSelection();
+        }
+      }
+      
+      generateFallbackTimes() {
+        // Business hours: 10 AM - 6 PM
+        return [
+          { time: '10:00 AM', barber: this.state.barber },
+          { time: '11:00 AM', barber: this.state.barber },
+          { time: '12:00 PM', barber: this.state.barber },
+          { time: '1:00 PM', barber: this.state.barber },
+          { time: '2:00 PM', barber: this.state.barber },
+          { time: '3:00 PM', barber: this.state.barber },
+          { time: '4:00 PM', barber: this.state.barber },
+          { time: '5:00 PM', barber: this.state.barber },
+          { time: '6:00 PM', barber: this.state.barber }
+        ];
+      }
+      
+      showTimeSelection() {
+        if (this.availableTimes.length === 0) {
+          this.addMessage("Sorry, no times are available on this date. Please try another date.", 'bot');
+          this.showDateSelection();
+          return;
+        }
+        
+        let timesHtml = '<div class="time-grid">';
+        this.availableTimes.forEach(timeObj => {
+          timesHtml += `
+            <div class="time-slot" onclick="chatbot.selectTime('${timeObj.time}')">
+              ${timeObj.time}
+            </div>
+          `;
+        });
+        timesHtml += '</div>';
+        
+        this.addMessage("Available times:" + timesHtml, 'bot');
+      }
+      
+      async selectTime(time) {
+        this.state.time = time;
+        this.addMessage(`I'd like the ${time} slot`, 'user');
+        
+        await this.delay(500);
+        this.addMessage("Perfect! Now I just need your contact information.", 'bot');
+        
+        await this.delay(1000);
+        this.addMessage("What's your full name?", 'bot');
+        this.state.step = 'name';
+      }
+      
+      async handleSend() {
+        const message = this.inputField.value.trim();
+        if (!message) return;
+        
+        this.addMessage(message, 'user');
+        this.inputField.value = '';
+        this.autoResize();
+        this.clearQuickReplies();
+        
+        await this.delay(500);
+        await this.processMessage(message);
+      }
+      
+      async processMessage(message) {
+        switch (this.state.step) {
+          case 'name':
+            this.state.name = message;
+            this.addMessage(`Nice to meet you, ${message}! What's your phone number?`, 'bot');
+            this.state.step = 'phone';
+            break;
+            
+          case 'phone':
+            this.state.phone = message;
+            this.addMessage("Great! And your email address? (Optional but recommended for confirmations)", 'bot');
+            this.state.step = 'email';
+            break;
+            
+          case 'email':
+            this.state.email = message;
+            await this.showBookingSummary();
+            break;
+            
+          default:
+            this.addMessage("I didn't understand that. Let me help you get back on track.", 'bot');
+            break;
+        }
+      }
+      
+      async showBookingSummary() {
+        const date = new Date(this.state.date);
+        const formattedDate = date.toLocaleDateString('en-US', { 
+          weekday: 'long', 
+          month: 'long', 
+          day: 'numeric' 
+        });
+        
+        const service = this.services.find(s => s.name === this.state.service);
+        
+        const summaryHtml = `
+          <div class="booking-summary">
+            <h4>📅 Booking Summary</h4>
+            <div class="booking-detail">
+              <strong>Barber:</strong> <span>${this.state.barber}</span>
+            </div>
+            <div class="booking-detail">
+              <strong>Service:</strong> <span>${this.state.service}</span>
+            </div>
+            <div class="booking-detail">
+              <strong>Date:</strong> <span>${formattedDate}</span>
+            </div>
+            <div class="booking-detail">
+              <strong>Time:</strong> <span>${this.state.time}</span>
+            </div>
+            <div class="booking-detail">
+              <strong>Price:</strong> <span>${service.price}</span>
+            </div>
+            <div class="booking-detail">
+              <strong>Name:</strong> <span>${this.state.name}</span>
+            </div>
+            <div class="booking-detail">
+              <strong>Phone:</strong> <span>${this.state.phone}</span>
+            </div>
+            ${this.state.email ? `<div class="booking-detail"><strong>Email:</strong> <span>${this.state.email}</span></div>` : ''}
+          </div>
+        `;
+        
+        this.addMessage("Here's your booking summary:" + summaryHtml, 'bot');
+        
+        await this.delay(1000);
+        const quickReplies = [
+          { text: '✅ Confirm Booking', action: () => this.confirmBooking() },
+          { text: '❌ Cancel', action: () => this.cancelBooking() }
+        ];
+        this.showQuickReplies(quickReplies);
+      }
+      
+      async confirmBooking() {
+        this.addMessage("✅ Yes, confirm my booking!", 'user');
+        this.clearQuickReplies();
+        
+        await this.delay(500);
+        this.addMessage('<span class="loading">Processing your booking...</span>', 'bot');
+        
+        try {
+          const bookingData = {
+            barber: this.state.barber,
+            service: this.state.service,
+            date: this.state.date,
+            time: this.state.time,
+            name: this.state.name,
+            phone: this.state.phone,
+            email: this.state.email
+          };
+          
+          const response = await fetch('/api/booking/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(bookingData)
+          });
+          
+          const result = await response.json();
+          
+          // Remove loading message
+          this.messagesContainer.lastElementChild.remove();
+          
+          if (result.success) {
+            this.addMessage(`
+              <div class="success-message">
+                🎉 <strong>Booking Confirmed!</strong><br>
+                Your appointment has been successfully booked. You should receive a confirmation email shortly.
+                <br><br>
+                📞 If you need to reschedule or cancel, please call (503) 400-8151
+              </div>
+            `, 'bot');
+            
+            await this.delay(2000);
+            this.addMessage("Would you like to book another appointment?", 'bot');
+            const quickReplies = [
+              { text: 'Book Another', action: () => this.startOver() },
+              { text: 'No, Thanks', action: () => this.addMessage('Have a great day! 👋', 'bot') }
+            ];
+            this.showQuickReplies(quickReplies);
+          } else {
+            this.addMessage(`
+              <div class="error-message">
+                ❌ <strong>Booking Failed</strong><br>
+                ${result.message || 'There was an error. Please try again or call (503) 400-8151'}
+              </div>
+            `, 'bot');
+          }
+        } catch (error) {
+          // Remove loading message
+          if (this.messagesContainer.lastElementChild) {
+            this.messagesContainer.lastElementChild.remove();
+          }
+          
+          this.addMessage(`
+            <div class="error-message">
+              ❌ <strong>Booking System Unavailable</strong><br>
+              Please call (503) 400-8151 to complete your booking with Michael. He'll be happy to schedule your appointment!
+            </div>
+          `, 'bot');
+        }
+      }
+      
+      cancelBooking() {
+        this.addMessage("❌ Cancel this booking", 'user');
+        this.clearQuickReplies();
+        
+        this.delay(500).then(() => {
+          this.addMessage("No problem! Your booking has been cancelled. Would you like to start over?", 'bot');
+          const quickReplies = [
+            { text: 'Start Over', action: () => this.startOver() },
+            { text: 'No, Thanks', action: () => this.addMessage('Feel free to come back anytime! 👋', 'bot') }
+          ];
+          this.showQuickReplies(quickReplies);
+        });
+      }
+      
+      startOver() {
+        this.state = {
+          step: 'barber_selection',
+          barber: null,
+          service: null,
+          date: null,
+          time: null,
+          name: null,
+          phone: null,
+          email: null
+        };
+        
+        this.addMessage("Let's start fresh! Which barber would you like to book with?", 'bot');
+        this.showBarberSelection();
+      }
+      
+      addMessage(content, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}`;
+        messageDiv.innerHTML = content;
+        
+        this.messagesContainer.appendChild(messageDiv);
+        this.scrollToBottom();
+      }
+      
+      showTyping() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message bot';
+        typingDiv.id = 'typing';
+        typingDiv.innerHTML = `<span class="loading">typing...</span>`;
+        
+        this.messagesContainer.appendChild(typingDiv);
+        this.scrollToBottom();
+      }
+      
+      hideTyping() {
+        const typing = document.getElementById('typing');
+        if (typing) {
+          typing.remove();
+        }
+      }
+      
+      showQuickReplies(replies) {
+        this.quickRepliesContainer.innerHTML = '';
+        replies.forEach(reply => {
+          const button = document.createElement('button');
+          button.className = 'quick-reply';
+          button.textContent = reply.text;
+          button.onclick = reply.action;
+          this.quickRepliesContainer.appendChild(button);
+        });
+      }
+      
+      clearQuickReplies() {
+        this.quickRepliesContainer.innerHTML = '';
+      }
+      
+      scrollToBottom() {
+        setTimeout(() => {
+          this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+        }, 100);
+      }
+      
+      delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+    }
+    
+    // Initialize the chatbot
+    const chatbot = new BookingChatbot();
+  </script>
+</body>
+</html>

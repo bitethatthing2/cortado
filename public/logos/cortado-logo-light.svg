@@ -1,0 +1,22 @@
+<svg width="320" height="100" viewBox="0 0 320 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main text "Cortado" with beautiful large cursive font -->
+  <text x="20" y="60" 
+        font-family="'Brush Script MT', 'Lucida Handwriting', 'Apple Chancery', cursive" 
+        font-size="48" 
+        font-weight="normal" 
+        fill="#2C2C2C" 
+        letter-spacing="2px"
+        style="font-style: italic;">
+    Cortado
+  </text>
+  
+  <!-- Subtitle "BARBERSHOP" -->
+  <text x="25" y="80" 
+        font-family="'Trajan Pro', 'Optima', sans-serif" 
+        font-size="12" 
+        font-weight="600" 
+        fill="#D4AF37" 
+        letter-spacing="4px">
+    BARBERSHOP
+  </text>
+</svg>

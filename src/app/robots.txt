@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://cortadobarbershop.com/sitemap.xml
+
+# Block specific crawlers that don't add value
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Allow Google and Bing
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
