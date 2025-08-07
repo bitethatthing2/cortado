@@ -32,15 +32,14 @@ async function getGoogleAuth() {
     if (process.env.GOOGLE_CREDENTIALS) {
       try {
         const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
-        const auth = new google.auth.JWT(
-          credentials.client_email,
-          null,
-          credentials.private_key,
-          [
+        const auth = new google.auth.JWT({
+          email: credentials.client_email,
+          key: credentials.private_key,
+          scopes: [
             'https://www.googleapis.com/auth/spreadsheets',
             'https://www.googleapis.com/auth/calendar.events'
           ]
-        );
+        });
         return auth;
       } catch (e) {
         console.error('Error parsing GOOGLE_CREDENTIALS:', e);
@@ -57,15 +56,14 @@ async function getGoogleAuth() {
       return null;
     }
     
-    const auth = new google.auth.JWT(
-      credentials.client_email,
-      null,
-      credentials.private_key,
-      [
+    const auth = new google.auth.JWT({
+      email: credentials.client_email,
+      key: credentials.private_key,
+      scopes: [
         'https://www.googleapis.com/auth/spreadsheets',
         'https://www.googleapis.com/auth/calendar.events'
       ]
-    );
+    });
     
     return auth;
   } catch (error) {
