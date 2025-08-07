@@ -99,10 +99,13 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ date: string, barber: string }> }
 ) {
+  let date = '';
+  let barber = '';
+  
   try {
     const { date: dateParam, barber: barberParam } = await params;
-    const date = decodeURIComponent(dateParam);
-    const barber = decodeURIComponent(barberParam);
+    date = decodeURIComponent(dateParam);
+    barber = decodeURIComponent(barberParam);
     
     console.log(`Getting available times for ${date} with ${barber}`);
     
