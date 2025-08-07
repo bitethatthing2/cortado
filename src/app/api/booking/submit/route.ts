@@ -270,8 +270,8 @@ async function addBookingToSheet(booking: any) {
       spreadsheetId: CONFIG.spreadsheetId,
       range: 'Form Responses!A:H',
       valueInputOption: 'USER_ENTERED',
-      resource: { values }
-    });
+      requestBody: { values }
+    } as any);
     
     console.log('Booking added to sheet successfully');
     return true;
