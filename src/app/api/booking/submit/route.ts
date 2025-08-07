@@ -32,14 +32,15 @@ async function getGoogleAuth() {
     if (process.env.GOOGLE_CREDENTIALS) {
       try {
         const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
-        const auth = new google.auth.JWT({
-          email: credentials.client_email,
-          key: credentials.private_key,
-          scopes: [
+        const auth = new google.auth.JWT(
+          credentials.client_email,
+          null,
+          credentials.private_key,
+          [
             'https://www.googleapis.com/auth/spreadsheets',
             'https://www.googleapis.com/auth/calendar.events'
           ]
-        });
+        );
         return auth;
       } catch (e) {
         console.error('Error parsing GOOGLE_CREDENTIALS:', e);
@@ -56,14 +57,15 @@ async function getGoogleAuth() {
       return null;
     }
     
-    const auth = new google.auth.JWT({
-      email: credentials.client_email,
-      key: credentials.private_key,
-      scopes: [
+    const auth = new google.auth.JWT(
+      credentials.client_email,
+      null,
+      credentials.private_key,
+      [
         'https://www.googleapis.com/auth/spreadsheets',
         'https://www.googleapis.com/auth/calendar.events'
       ]
-    });
+    );
     
     return auth;
   } catch (error) {
@@ -238,9 +240,9 @@ Barber: ${booking.barber}
     
     const response = await calendar.events.insert({
       calendarId: CONFIG.calendarId,
-      requestBody: event,
+      resource: event,
       sendUpdates: 'none'
-    } as any);
+    });
     
     console.log('Calendar event created:', response.data.htmlLink);
     return true;
@@ -270,8 +272,8 @@ async function addBookingToSheet(booking: any) {
       spreadsheetId: CONFIG.spreadsheetId,
       range: 'Form Responses!A:H',
       valueInputOption: 'USER_ENTERED',
-      requestBody: { values }
-    } as any);
+      resource: { values }
+    });
     
     console.log('Booking added to sheet successfully');
     return true;
@@ -288,7 +290,17 @@ export async function OPTIONS() {
 export async function POST(request: NextRequest) {
   try {
     const booking = await request.json();
-    console.log('Booking submission received:', booking);
+    console.log('=== BOOKING SUBMISSION STARTED ===');
+    console.log('Booking data:', JSON.stringify(booking, null, 2));
+    console.log('Environment check:', {
+      hasGoogleCreds: !!process.env.GOOGLE_CREDENTIALS,
+      hasClientEmail: !!process.env.GOOGLE_CLIENT_EMAIL,
+      hasPrivateKey: !!process.env.GOOGLE_PRIVATE_KEY,
+      hasSpreadsheetId: !!CONFIG.spreadsheetId,
+      hasCalendarId: !!CONFIG.calendarId,
+      hasEmailUser: !!CONFIG.emailUser,
+      hasEmailPass: !!CONFIG.emailPass
+    });
     
     // Validate booking data
     if (!booking.barber || !booking.service || !booking.date || !booking.time || !booking.name) {
