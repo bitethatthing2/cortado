@@ -5,6 +5,7 @@ import ServicesSection from '@/components/sections/ServicesSection'
 import BarbersSection from '@/components/sections/BarbersSection'
 import GallerySection from '@/components/sections/GallerySection'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
+import LocationSection from '@/components/sections/LocationSection'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
@@ -19,6 +20,7 @@ export default function HomePage() {
       <BarbersSection />
       <GallerySection />
       <TestimonialsSection />
+      <LocationSection />
       <Footer />
       <iframe 
         src="/chatbot.html" 
