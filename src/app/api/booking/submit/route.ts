@@ -238,9 +238,9 @@ Barber: ${booking.barber}
     
     const response = await calendar.events.insert({
       calendarId: CONFIG.calendarId,
-      resource: event,
+      requestBody: event,
       sendUpdates: 'none'
-    });
+    } as any);
     
     console.log('Calendar event created:', response.data.htmlLink);
     return true;
