@@ -32,7 +32,7 @@ export default function BarbersSection() {
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl font-serif">
             Meet Your Master Barber
           </h2>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+          <p className="mt-4 text-lg text-gray-200">
             **23 years of expertise** at Suite 150B. Salem's premier destination for **all hair types** and **precision cuts**.
           </p>
         </div>
@@ -61,48 +61,58 @@ export default function BarbersSection() {
                   <p className="text-gold font-semibold mb-2">
                     {barber.title}
                   </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  <p className="text-sm text-gray-200 mb-3">
                     {barber.experience}
                   </p>
-                  <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                    {barber.specialty}
-                  </p>
+                  <div className="text-sm font-semibold text-gold">
+                    <span className="bg-gold/10 px-3 py-1 rounded-full border border-gold/30">All Hair Types</span> • 
+                    <span className="bg-gold/10 px-3 py-1 rounded-full border border-gold/30 ml-1">Precision Fades</span> • 
+                    <span className="bg-gold/10 px-3 py-1 rounded-full border border-gold/30 ml-1">Classic Cuts</span> • 
+                    <span className="bg-gold/10 px-3 py-1 rounded-full border border-gold/30 ml-1">Black Hair Expert</span>
+                  </div>
                 </div>
 
                 {/* Bio */}
-                <p className="text-sm text-gray-600 dark:text-gray-400 text-center mb-6 leading-relaxed">
-                  {barber.bio}
-                </p>
+                <div className="text-center mb-6 leading-relaxed">
+                  <p className="text-base text-gray-100 font-medium mb-2">
+                    Michael is a <span className="text-gold font-bold">Master Barber</span> with an impressive <span className="text-gold font-bold">23 years of experience</span> serving Salem and the surrounding community.
+                  </p>
+                  <p className="text-sm text-gray-200">
+                    His <span className="text-gold font-semibold">expertise spans all hair types</span> and textures, making him the go-to professional for clients with diverse needs. Specializing in <span className="text-gold font-semibold">precision fades</span>, <span className="text-gold font-semibold">classic gentleman cuts</span>, and advanced techniques for <span className="text-gold font-semibold">textured and ethnic hair</span>.
+                  </p>
+                </div>
 
                 {/* Stats */}
-                <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+                <div className="border-t border-gray-600 pt-6">
                   <div className="grid grid-cols-2 gap-4 mb-4">
-                    <div className="text-center">
-                      <div className="flex items-center justify-center mb-1">
-                        <Clock className="h-4 w-4 text-gold mr-1" />
+                    <div className="text-center bg-gray-800/50 rounded-lg p-4">
+                      <div className="flex items-center justify-center mb-2">
+                        <Clock className="h-6 w-6 text-gold" />
                       </div>
-                      <p className="text-sm font-semibold text-white">
-                        {barber.stats.yearsExperience} Years
+                      <p className="text-2xl font-bold text-gold">
+                        {barber.stats.yearsExperience}
                       </p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">Experience</p>
+                      <p className="text-sm text-gray-200 font-medium">Years</p>
+                      <p className="text-xs text-gray-300">Experience</p>
                     </div>
-                    <div className="text-center">
-                      <div className="flex items-center justify-center mb-1">
-                        <Award className="h-4 w-4 text-gold mr-1" />
+                    <div className="text-center bg-gray-800/50 rounded-lg p-4">
+                      <div className="flex items-center justify-center mb-2">
+                        <Award className="h-6 w-6 text-gold" />
                       </div>
-                      <p className="text-sm font-semibold text-white">
+                      <p className="text-2xl font-bold text-gold">
                         {barber.stats.clientsServed}
                       </p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">Clients Served</p>
+                      <p className="text-sm text-gray-200 font-medium">Clients</p>
+                      <p className="text-xs text-gray-300">Served</p>
                     </div>
                   </div>
 
                   {/* Specialties */}
-                  <div className="flex flex-wrap gap-1 justify-center">
+                  <div className="flex flex-wrap gap-2 justify-center">
                     {barber.stats.specialties.map((specialty, index) => (
                       <span
                         key={index}
-                        className="inline-block px-2 py-1 text-xs bg-gold/10 text-gold rounded-full"
+                        className="inline-block px-4 py-2 text-sm bg-gold/20 text-gold font-semibold rounded-full border border-gold/40 hover:bg-gold/30 transition-colors"
                       >
                         {specialty}
                       </span>
@@ -126,7 +136,7 @@ export default function BarbersSection() {
           <h3 className="text-2xl font-bold text-white mb-2">
             Ready to Experience **23 Years** of Master Barbering?
           </h3>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
+          <p className="text-gray-200 mb-6">
             Michael at Suite 150B is ready to deliver your perfect cut - **specializing in all hair types**
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
