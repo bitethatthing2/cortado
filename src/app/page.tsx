@@ -24,13 +24,15 @@ export default function HomePage() {
         src="/chatbot.html" 
         style={{ 
           position: 'fixed', 
-          bottom: '0', 
-          right: '0', 
-          width: '100vw', 
-          height: '100vh', 
+          bottom: '20px', 
+          right: '20px', 
+          width: '400px', 
+          height: '600px', 
           border: 'none',
           zIndex: 1000,
-          pointerEvents: 'auto'
+          pointerEvents: 'auto',
+          maxWidth: 'calc(100vw - 40px)',
+          maxHeight: 'calc(100vh - 100px)'
         }}
         title="Booking Assistant"
       />

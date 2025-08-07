@@ -97,11 +97,12 @@ export async function OPTIONS() {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { date: string, barber: string } }
+  { params }: { params: Promise<{ date: string, barber: string }> }
 ) {
   try {
-    const date = decodeURIComponent(params.date);
-    const barber = decodeURIComponent(params.barber);
+    const { date: dateParam, barber: barberParam } = await params;
+    const date = decodeURIComponent(dateParam);
+    const barber = decodeURIComponent(barberParam);
     
     console.log(`Getting available times for ${date} with ${barber}`);
     
@@ -123,8 +124,8 @@ export async function GET(
         success: false,
         message: 'Error retrieving available times',
         availableTimes: [],
-        date: params.date,
-        barber: params.barber
+        date: date,
+        barber: barber
       },
       { status: 500, headers }
     );

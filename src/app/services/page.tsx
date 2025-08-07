@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import { Star, Check, Calendar, Clock, DollarSign, Scissors, Razor, Users, Award } from 'lucide-react'
+import { Star, Check, Calendar, Clock, DollarSign, Scissors, Users, Award } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Professional Barber Services | Michael\'s 23 Years Experience | Cortado Barbershop Salem',
@@ -36,7 +36,7 @@ const services = [
   {
     id: 'fades',
     name: 'Signature Fades',
-    icon: Razor,
+    icon: Scissors,
     price: '$30-45', 
     duration: '30-40 min',
     description: 'Expert fade techniques perfected over 23 years. From classic tapers to modern skin fades.',
@@ -70,7 +70,7 @@ const services = [
   {
     id: 'hot-towel-shaves',
     name: 'Hot Towel Shaves',
-    icon: Razor,
+    icon: Scissors,
     price: '$40-55',
     duration: '45-60 min',
     description: 'Traditional luxury shaving experience. Michael\'s classic techniques for the ultimate gentleman\'s service.',

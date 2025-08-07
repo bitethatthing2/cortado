@@ -50,11 +50,12 @@ export async function OPTIONS() {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { barber: string } }
+  { params }: { params: Promise<{ barber: string }> }
 ) {
   try {
-    const barber = decodeURIComponent(params.barber);
-    console.log(`Getting available dates for barber: ${barber}`);
+    const { barber } = await params;
+    const barberName = decodeURIComponent(barber);
+    console.log(`Getting available dates for barber: ${barberName}`);
     
     const dates = generateAvailableDates();
     
