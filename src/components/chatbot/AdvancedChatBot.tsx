@@ -21,10 +21,10 @@ const quickActions = [
 const faqResponses: { [key: string]: string } = {
   'hours': 'We\'re open 7 days a week from 10am to 6pm. No appointment necessary, but booking with Michael ensures your preferred time slot!',
   'location': 'We\'re located at 2195 Hyacinth St NE Suite 150B, Salem, OR 97301. Look for Suite 150B - Michael has 23 years of experience and 130+ 5-star reviews!',
-  'services': 'Michael offers: Premium Haircuts ($35-50), Signature Fades ($30-45), Beard Trims ($20-35), Hot Towel Shaves ($40-55). All include consultation and Michael\'s expert touch with 23 years of experience.',
+  'services': 'Michael offers: Haircut ($45), Haircut & Beard Trim ($60), Beard Trim ($30), Straight Razor Shave ($35), Haircut + Beard + Shave ($80). All include consultation and Michael\'s expert touch with 23 years of experience.',
   'book': 'You can book online through our website or call us at 503-967-0304 to schedule with Michael. We recommend booking for minimal wait time, but walk-ins are always welcome!',
   'black_hair': 'Absolutely! Michael specializes in ALL hair types with 23 years of experience, including black hair. He\'s an expert in fades, line-ups, and textured hair styling.',
-  'pricing': 'Michael\'s services range from $20-55: Premium Haircuts ($35-50), Signature Fades ($30-45), Beard Trims ($20-35), Hot Towel Shaves ($40-55). 23 years of master barber expertise!',
+  'pricing': 'Michael\'s services: Haircut ($45), Haircut & Beard Trim ($60), Beard Trim ($30), Straight Razor Shave ($35), Haircut + Beard + Shave ($80). 23 years of master barber expertise!',
 }
 
 export default function AdvancedChatBot() {

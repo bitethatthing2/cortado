@@ -20,7 +20,7 @@ const services = [
     id: 'haircuts',
     name: 'Premium Haircuts',
     icon: Scissors,
-    price: '$35-50',
+    price: '$45',
     duration: '30-45 min',
     description: 'Michael\'s signature precision cuts for all hair types. 23+ years of expertise in classic and modern styles.',
     features: [
@@ -37,7 +37,7 @@ const services = [
     id: 'fades',
     name: 'Signature Fades',
     icon: Scissors,
-    price: '$30-45', 
+    price: '$45', 
     duration: '30-40 min',
     description: 'Expert fade techniques perfected over 23 years. From classic tapers to modern skin fades.',
     features: [
@@ -54,7 +54,7 @@ const services = [
     id: 'beard-grooming',
     name: 'Beard Grooming', 
     icon: Scissors,
-    price: '$20-35',
+    price: '$30',
     duration: '20-30 min',
     description: 'Professional beard shaping, trimming, and styling. Michael\'s expertise ensures the perfect beard for your face.',
     features: [
@@ -71,7 +71,7 @@ const services = [
     id: 'hot-towel-shaves',
     name: 'Hot Towel Shaves',
     icon: Scissors,
-    price: '$40-55',
+    price: '$35',
     duration: '45-60 min',
     description: 'Traditional luxury shaving experience. Michael\'s classic techniques for the ultimate gentleman\'s service.',
     features: [

@@ -5,7 +5,7 @@ const services = [
   {
     name: 'Premium Haircuts',
     description: 'Precision cuts tailored to your style and face shape. Includes consultation, shampoo, and styling.',
-    price: '$35-50',
+    price: '$45',
     icon: Scissors,
     href: '/services/haircuts',
     features: ['Personal consultation', 'Hot towel service', 'Styling products', 'Neck trim'],
@@ -13,7 +13,7 @@ const services = [
   {
     name: 'Signature Fades',
     description: 'Expert fades for all hair types. From low to high, skin to drop fades - we master them all.',
-    price: '$30-45',
+    price: '$45',
     icon: Zap,
     href: '/services/fades',
     features: ['All fade types', 'Line-up included', 'Design options', 'Black hair specialist'],
@@ -21,7 +21,7 @@ const services = [
   {
     name: 'Beard Grooming',
     description: 'Complete beard maintenance including trim, shape, and conditioning for a polished look.',
-    price: '$20-35',
+    price: '$30',
     icon: Users,
     href: '/services/beard-grooming',
     features: ['Beard trim & shape', 'Mustache styling', 'Beard oil treatment', 'Hot towel finish'],
@@ -29,7 +29,7 @@ const services = [
   {
     name: 'Hot Towel Shaves',
     description: 'Traditional luxury shave experience with hot towels, premium products, and expert technique.',
-    price: '$40-55',
+    price: '$35',
     icon: Sparkles,
     href: '/services/hot-towel-shaves',
     features: ['Pre-shave oil', 'Hot towel treatment', 'Straight razor shave', 'Aftershave balm'],

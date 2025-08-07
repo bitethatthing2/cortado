@@ -90,6 +90,77 @@ const createTransporter = () => {
   });
 };
 
+// Function to generate ICS calendar file
+function generateICSFile(booking: any): string {
+  // Parse date and time
+  const [month, day, year] = booking.date.split('/');
+  const [time, period] = booking.time.split(' ');
+  const [hourStr, minuteStr] = time.split(':');
+  
+  let hour = parseInt(hourStr, 10);
+  const minute = parseInt(minuteStr, 10);
+  
+  // Convert to 24-hour format
+  if (period === 'PM' && hour < 12) {
+    hour += 12;
+  } else if (period === 'AM' && hour === 12) {
+    hour = 0;
+  }
+  
+  // Get appointment duration
+  const serviceType = booking.service.toLowerCase();
+  let appointmentDuration = 60; // Default 60 minutes
+  
+  if (serviceType.includes('haircut') && serviceType.includes('beard')) {
+    appointmentDuration = 60;
+  } else if (serviceType.includes('haircut')) {
+    appointmentDuration = 45;
+  } else if (serviceType.includes('beard')) {
+    appointmentDuration = 30;
+  } else if (serviceType.includes('shave')) {
+    appointmentDuration = 30;
+  } else if (serviceType.includes('enhancement')) {
+    appointmentDuration = serviceType.includes('temporary') ? 15 : 45;
+  }
+  
+  // Create start and end datetime strings in UTC format
+  const startDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), hour, minute);
+  const endDate = new Date(startDate.getTime() + appointmentDuration * 60 * 1000);
+  
+  // Format dates for ICS (YYYYMMDDTHHMMSSZ)
+  const formatDate = (date: Date) => {
+    const pad = (num: number) => num.toString().padStart(2, '0');
+    return `${date.getUTCFullYear()}${pad(date.getUTCMonth() + 1)}${pad(date.getUTCDate())}T${pad(date.getUTCHours())}${pad(date.getUTCMinutes())}${pad(date.getUTCSeconds())}Z`;
+  };
+  
+  const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Cortado Barbershop//Appointment//EN
+METHOD:REQUEST
+BEGIN:VEVENT
+UID:${Date.now()}@cortadobarbershop.com
+DTSTAMP:${formatDate(new Date())}
+DTSTART:${formatDate(startDate)}
+DTEND:${formatDate(endDate)}
+SUMMARY:Cortado Barbershop - ${booking.service}
+DESCRIPTION:Appointment Details:\\n\\nService: ${booking.service}\\nBarber: ${booking.barber}\\nDuration: ${appointmentDuration} minutes\\n\\nLocation: 2195 Hyacinth St NE Suite 150B, Salem, OR 97301\\nPhone: (503) 967-0304
+LOCATION:Cortado Barbershop - 2195 Hyacinth St NE Suite 150B, Salem, OR 97301
+BEGIN:VALARM
+TRIGGER:-PT1H
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Cortado Barbershop appointment in 1 hour
+END:VALARM
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:Reminder: Cortado Barbershop appointment in 15 minutes
+END:VALARM
+END:VEVENT
+END:VCALENDAR`;
+  
+  return icsContent;
+}
+
 // Function to send confirmation email
 async function sendConfirmationEmail(booking: any) {
   try {
@@ -104,6 +175,9 @@ async function sendConfirmationEmail(booking: any) {
       return false;
     }
     
+    // Generate ICS file for calendar
+    const icsContent = generateICSFile(booking);
+    
     const emailContent = `
       <h1>Booking Confirmation - Cortado Barbershop</h1>
       <p>Hello ${booking.name},</p>
@@ -114,20 +188,29 @@ async function sendConfirmationEmail(booking: any) {
         <li><strong>Barber:</strong> ${booking.barber}</li>
         <li><strong>Service:</strong> ${booking.service}</li>
       </ul>
-      <p>If you need to reschedule or cancel, please contact us at (503) 400-8151.</p>
+      <p><strong>Location:</strong> 2195 Hyacinth St NE Suite 150B, Salem, OR 97301</p>
+      <p>A calendar invitation is attached to this email. Click on it to add the appointment to your calendar.</p>
+      <p>If you need to reschedule or cancel, please contact us at (503) 967-0304.</p>
       <p>Thank you for choosing Cortado Barbershop!</p>
     `;
     
-    // Email to customer
+    // Email to customer with ICS attachment
     const customerMailOptions = {
       from: CONFIG.emailUser,
       to: booking.email,
       subject: 'Cortado Barbershop - Appointment Confirmation',
-      html: emailContent
+      html: emailContent,
+      attachments: [
+        {
+          filename: 'cortado-appointment.ics',
+          content: icsContent,
+          contentType: 'text/calendar'
+        }
+      ]
     };
     
     const customerInfo = await transporter.sendMail(customerMailOptions);
-    console.log('Customer email sent:', customerInfo.response);
+    console.log('Customer email sent with calendar invite:', customerInfo.response);
     
     // Email to barber
     const barberEmailContent = `

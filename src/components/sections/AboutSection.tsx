@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Star, Award, Users, Scissors } from 'lucide-react'
 
 export default function AboutSection() {
@@ -21,6 +22,24 @@ export default function AboutSection() {
             an experience that goes beyond just a haircut. Our commitment to excellence has earned us the trust 
             of Salem's most discerning gentlemen.
           </p>
+        </div>
+
+        {/* Shop Front Image */}
+        <div className="mx-auto mt-16 max-w-4xl">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+            <Image
+              src="/logos/front-view-cortado.png"
+              alt="The Cortado Barbershop - Salem's Premier Destination"
+              width={800}
+              height={400}
+              className="w-full h-96 object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6">
+              <h3 className="text-2xl font-bold text-white mb-2">Welcome to Cortado</h3>
+              <p className="text-gray-200">Your destination for premium barbering in Salem, Oregon</p>
+            </div>
+          </div>
         </div>
 
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">

@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const haircuts = [
   {
     name: 'Classic Gentleman\'s Cut',
-    price: '$35',
+    price: '$45',
     duration: '30 min',
     description: 'Timeless style with modern precision. Perfect for the professional gentleman.',
     features: ['Consultation', 'Shampoo & condition', 'Precision cut', 'Style & finish', 'Neck trim'],
@@ -30,14 +30,14 @@ const haircuts = [
   },
   {
     name: 'Textured & Curly Hair Specialist',
-    price: '$40-50',
+    price: '$45',
     duration: '45 min',
     description: 'Expert care for black hair, curly, and textured hair types. Salem\'s black hair specialist.',
     features: ['Texture analysis', 'Specialized techniques', 'Moisture treatment', 'Custom styling', 'Product recommendations'],
   },
   {
     name: 'Kids Haircut (12 & Under)',
-    price: '$25',
+    price: '$30',
     duration: '30 min',
     description: 'Patient, friendly service for Salem\'s youngest gentlemen.',
     features: ['Fun, relaxed atmosphere', 'Age-appropriate styles', 'Parent consultation', 'Gentle approach', 'Lollipop included'],

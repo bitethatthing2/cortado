@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const fadeTypes = [
   {
     name: 'Low Fade',
-    price: '$30-35',
+    price: '$45',
     duration: '30 min',
     description: 'Subtle, professional fade starting just above the ears. Perfect for conservative styles.',
     features: ['Gradual blend', 'Professional appearance', 'Versatile styling', 'Easy maintenance'],
@@ -24,7 +24,7 @@ const fadeTypes = [
   },
   {
     name: 'Mid Fade',
-    price: '$35-40',
+    price: '$45',
     duration: '35 min', 
     description: 'Our most popular fade. Balanced blend starting at temple level for versatile styling.',
     features: ['Most versatile option', 'Clean, modern look', 'Works with any hair type', 'Medium maintenance'],
@@ -32,7 +32,7 @@ const fadeTypes = [
   },
   {
     name: 'High Fade',
-    price: '$35-40',
+    price: '$45',
     duration: '35 min',
     description: 'Bold, modern fade starting high on the sides. Maximum contrast and edge.',
     features: ['High contrast', 'Bold, edgy look', 'Maximum fade effect', 'Statement style'],
@@ -40,7 +40,7 @@ const fadeTypes = [
   },
   {
     name: 'Skin Fade',
-    price: '$40-45',
+    price: '$45',
     duration: '40 min',
     description: 'Ultimate precision fade blending to skin level. Salem\'s cleanest fade specialist.',
     features: ['Blends to skin', 'Maximum precision', 'Ultra-clean finish', 'Premium technique'],

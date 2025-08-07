@@ -16,28 +16,28 @@ export const metadata: Metadata = {
 const shaveServices = [
   {
     name: 'Classic Hot Towel Shave',
-    price: '$40',
+    price: '$35',
     duration: '35 min',
     description: 'Traditional hot towel shave with straight razor for the ultimate grooming experience.',
     features: ['Pre-shave oil application', 'Hot towel treatment', 'Straight razor shave', 'Post-shave moisturizer'],
   },
   {
     name: 'Luxury Shave Experience',
-    price: '$55',
+    price: '$35',
     duration: '50 min',
     description: 'Our premium shave service with extended hot towel treatment and luxury finishing.',
     features: ['Extended hot towel ritual', 'Premium pre-shave oils', 'Multiple towel applications', 'Luxury aftershave balm', 'Scalp massage'],
   },
   {
     name: 'Beard Line Shave',
-    price: '$30',
+    price: '$35',
     duration: '25 min',
     description: 'Precise shaving around beard lines and neck area with hot towel preparation.',
     features: ['Targeted shaving', 'Hot towel prep', 'Clean neck lines', 'Beard edge definition'],
   },
   {
     name: 'Full Service: Cut + Shave',
-    price: '$70-80',
+    price: '$80',
     duration: '75 min',
     description: 'Complete gentleman\'s package combining premium haircut with luxury hot towel shave.',
     features: ['Premium haircut', 'Full hot towel shave', 'Styling', 'Complete grooming experience'],

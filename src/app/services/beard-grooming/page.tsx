@@ -16,28 +16,28 @@ export const metadata: Metadata = {
 const beardServices = [
   {
     name: 'Classic Beard Trim',
-    price: '$20',
+    price: '$30',
     duration: '20 min',
     description: 'Professional beard trimming and shaping to maintain your desired length and style.',
     features: ['Length adjustment', 'Shape definition', 'Mustache trim', 'Cleanup around edges'],
   },
   {
     name: 'Beard Shape & Style',
-    price: '$25-30',
+    price: '$30',
     duration: '30 min',
     description: 'Complete beard transformation with customized shaping and styling.',
     features: ['Custom shaping', 'Mustache styling', 'Neckline definition', 'Cheek line cleanup', 'Style consultation'],
   },
   {
     name: 'Premium Beard Grooming',
-    price: '$35',
+    price: '$30',
     duration: '40 min',
     description: 'Luxury beard treatment including trim, hot towel, conditioning, and styling.',
     features: ['Hot towel treatment', 'Beard conditioning', 'Professional trim & shape', 'Premium beard oil', 'Styling advice'],
   },
   {
     name: 'Mustache Trim',
-    price: '$15',
+    price: '$20',
     duration: '15 min',
     description: 'Precise mustache trimming and styling for the perfect finish.',
     features: ['Precision trimming', 'Style shaping', 'Cleanup', 'Wax application (if desired)'],

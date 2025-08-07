@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { MapPin, Phone, Clock, Navigation } from 'lucide-react'
 
 export default function LocationSection() {
@@ -19,14 +20,31 @@ export default function LocationSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+          {/* Shop Front Image */}
+          <div className="order-1 lg:order-1">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <Image
+                src="/logos/front-view-cortado.png"
+                alt="Cortado Barbershop Front - Suite 150B, Salem, OR"
+                width={400}
+                height={400}
+                className="w-full h-80 object-cover"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                <p className="text-white font-semibold">Look for our sign at Suite 150B</p>
+                <p className="text-gold text-sm">Free parking available</p>
+              </div>
+            </div>
+          </div>
+
           {/* Map */}
-          <div className="order-2 lg:order-1">
+          <div className="order-2 lg:order-2">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2822.129887883635!2d-123.00411412367744!3d44.98167247107018!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54bfff82442b0a81%3A0x3a782d6fd6f00cf7!2sCortado%20Barbershop!5e0!3m2!1sen!2sus!4v1754531245145!5m2!1sen!2sus"
                 width="100%"
-                height="400"
+                height="320"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
@@ -38,7 +56,7 @@ export default function LocationSection() {
           </div>
 
           {/* Location Info */}
-          <div className="order-1 lg:order-2 space-y-8">
+          <div className="order-3 lg:order-3 space-y-8">
             {/* Address */}
             <div className="flex items-start space-x-4">
               <div className="rounded-full bg-gold/10 p-3 flex-shrink-0">

@@ -1,9 +1,9 @@
 import HeroSection from '@/components/sections/HeroSection'
-import ContactInfoBar from '@/components/sections/ContactInfoBar'
 import AboutSection from '@/components/sections/AboutSection'
 import ServicesSection from '@/components/sections/ServicesSection'
 import BarbersSection from '@/components/sections/BarbersSection'
 import GallerySection from '@/components/sections/GallerySection'
+import InstagramSection from '@/components/sections/InstagramSection'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import LocationSection from '@/components/sections/LocationSection'
 import Header from '@/components/layout/Header'
@@ -14,13 +14,13 @@ export default function HomePage() {
     <main className="min-h-screen bg-gray-900">
       <Header />
       <HeroSection />
-      <ContactInfoBar />
-      <AboutSection />
-      <ServicesSection />
-      <BarbersSection />
-      <GallerySection />
-      <TestimonialsSection />
       <LocationSection />
+      <ServicesSection />
+      <AboutSection />
+      <BarbersSection />
+      <TestimonialsSection />
+      <GallerySection />
+      <InstagramSection />
       <Footer />
       <iframe 
         src="/chatbot.html" 

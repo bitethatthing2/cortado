@@ -7,11 +7,11 @@ export const bookingFlow = {
       message: 'What service would you like to book with Michael today?',
       type: 'options',
       options: [
-        { value: 'haircut', label: '💇‍♂️ Premium Haircut ($35-50)' },
-        { value: 'fade', label: '✂️ Signature Fade ($30-45)' },
-        { value: 'beard_trim', label: '🧔 Beard Trim ($20-35)' },
-        { value: 'hot_towel_shave', label: '🪒 Hot Towel Shave ($40-55)' },
-        { value: 'combo', label: '🔥 Haircut + Beard Combo (Save $5-15!)' }
+        { value: 'haircut', label: '💇‍♂️ Premium Haircut ($45)' },
+        { value: 'fade', label: '✂️ Signature Fade ($45)' },
+        { value: 'beard_trim', label: '🧔 Beard Trim ($30)' },
+        { value: 'hot_towel_shave', label: '🪒 Hot Towel Shave ($35)' },
+        { value: 'combo', label: '🔥 Haircut + Beard Combo ($60)' }
       ]
     },
     {
@@ -63,7 +63,7 @@ export const faqResponses = {
   
   location: `📍 **Find Us:**\n2195 Hyacinth St NE **Suite 150B**\nSalem, OR 97301\n\n🚗 Free parking in front of the building\n📞 503-967-0304\n\n**Important:** We're in Suite 150B (not just 150). Look for our Cortado Barbershop sign with Michael's 23 years of experience!`,
   
-  pricing: `💰 **Michael's Pricing:**\n\n💇‍♂️ Premium Haircuts: $35-50\n✂️ Signature Fades: $30-45\n🧔 Beard Trims: $20-35\n🪒 Hot Towel Shaves: $40-55\n🔥 Combo Deals: $50-70 (Save up to $15!)\n\nAll services include consultation with Michael's 23 years of expertise!`,
+  pricing: `💰 **Michael's Pricing:**\n\n💇‍♂️ Haircut: $45\n✂️ Haircut & Beard Trim: $60\n🧔 Beard Trim: $30\n🪒 Straight Razor Shave: $35\n🔥 Haircut, Beard & Shave: $80\n\nAll services include consultation with Michael's 23 years of expertise!`,
   
   black_hair: `✊ **Master of ALL Hair Types!**\n\nAbsolutely! Michael is a master barber with **23 YEARS of experience** specializing in ALL hair types, especially black hair. He's an expert in:\n\n• Precision fades and line-ups\n• Textured hair styling\n• Natural hair care\n• Beard grooming for coarse hair\n• Product recommendations\n\n23 years of experience serving Salem's diverse community!`,
   

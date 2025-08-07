@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { MapPin, Phone, Clock, Mail, Instagram, Calendar, Star, Users } from 'lucide-react'
@@ -94,6 +95,24 @@ export default function ContactPage() {
                   <Calendar className="h-5 w-5" />
                   Book Online →
                 </Link>
+              </div>
+            </div>
+
+            {/* Shop Front Image */}
+            <div className="mx-auto mt-16 max-w-4xl">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+                <Image
+                  src="/logos/front-view-cortado.png"
+                  alt="Cortado Barbershop Front View - Find us at Suite 150B"
+                  width={800}
+                  height={400}
+                  className="w-full h-96 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 text-center">
+                  <h3 className="text-2xl font-bold text-white mb-2">Easy to Find</h3>
+                  <p className="text-gray-200">Look for our sign at Suite 150B - Free parking available</p>
+                </div>
               </div>
             </div>
           </div>
